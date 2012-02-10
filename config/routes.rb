@@ -1,9 +1,9 @@
 Twizilla::Application.routes.draw do
-  get "pages/home"
+  get "users/new"
 
-  get "pages/contact"
-
-  get "pages/about"
+  root :to => "pages#home"
+  match '/contact', :to => "pages#contact"
+  match '/about',   :to => "pages#about"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
