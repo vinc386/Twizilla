@@ -117,8 +117,8 @@ describe User do
       User.authenticate(@attr[:email], "wrongpassword").should be_nil
     end
     
-    it "should return nil for no email/no user" do
-      User.authenticate('not_exist@email.com', @attr[:password]).should be_nil
+    it "should return nil for non existed email/user" do
+      User.authenticate('non_existed@email.com', @attr[:password]).should be_nil
     end
     
     it "should return a user on match" do

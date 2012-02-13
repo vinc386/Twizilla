@@ -22,12 +22,18 @@ class User < ActiveRecord::Base
     encrypted_password == encrypt(submitted_password)
   end
   
-  def self.authenticate(email, submitted_password)
-    user = self.find_by_email(email)
-    #why these following 2 lines can't be swapped?
-    return nil if user.nil?
-    return user if user.has_password?(submitted_password)
+  class << self
+    def authenticate(email, submitted_password)
+      user = find_by_email(email)
+      #why these following 2 lines can't be swapped?
+      if user.nil?
+        nil
+      elsif user.has_password?(submitted_password)
+        user
+      end
+    end
   end
+
   
   private
   
