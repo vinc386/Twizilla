@@ -18,6 +18,16 @@ describe UsersController do
       get :show, :id => @user
       assigns(:user).should == @user
     end
+    
+    # it "should have the right title" do
+    #   get :show, :id => @user
+    #   response.should have_selector('title', :content => @user.name )
+    # end
+    
+    # it "should have an avatar" do
+    #   get :show, :id => @user
+    #   response.should have_selector('h3>img', :class => 'gravatar')
+    # end
   end
   
   describe "GET 'new'" do
