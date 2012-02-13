@@ -94,3 +94,17 @@ footer{
 footer nav{
 	float:none;
 }
+/*user show page*/
+div.profile{
+	width:100%;
+	margin-bottom:0;
+}
+div.sidebar{
+	width:30%;
+	padding:.8em;
+	vertical-align:top;
+	background:#ffc;
+	float:right;
+	position:relative;
+	top:-70px;
+}

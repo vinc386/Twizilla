@@ -1,6 +1,11 @@
-<h3>
-	<%= gravatar_for @user%>
-	<%= @user.name %>
-</h3>
+<div class='profile'>
+	<h1 class="main" style="display:inline">
+		<%= gravatar_for @user%>
+		<%= @user.name %>
+	</h1>
+</div>
+<div class="sidebar round">
+	<strong>Name: </strong><%= @user.name %><br />
+	<strong>URL: </strong><%= link_to user_path(@user), @user %>
+</div>
 
- <%= @user.email %>
