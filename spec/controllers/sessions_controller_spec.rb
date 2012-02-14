@@ -15,8 +15,50 @@ describe SessionsController do
       get :new
       response.should have_selector('title', :content => "Sign In")
     end
-    
-    
+
   end
 
+  describe "POST 'create" do
+    
+    describe "failure" do
+      
+      before(:each) do
+        @attr = { :email => '', :password => '' }
+      end
+      
+      it "should re-render the sign in page" do
+        post :create, :session => @attr
+        response.should render_template('new')
+      end
+      
+      it "should have the same title" do
+        get :create, :session => @attr
+        response.should have_selector('title', :content => 'Sign In')
+      end
+      
+      it "should flash an error message" do
+        post :create, :session => @attr
+        flash.now[:error].should =~ /combination/i
+      end
+    end
+
+    describe "success" do
+      
+      before(:each) do
+        @user = Factory(:user)
+        @attr = { :email => @user.email, :password => @user.password}
+      end
+      
+      it "should sign the user in" do
+        post :create, :session => @attr
+        controller.current_user.should eq(@user)
+        controller.should be_signed_in
+      end
+      
+      it "should go to the user show page" do
+        post :create, :session => @attr
+        response.should redirect_to(user_path(@user)) 
+      end
+    end
+  end
 end
