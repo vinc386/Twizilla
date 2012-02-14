@@ -3,7 +3,6 @@ require 'spec_helper'
 describe "Users" do
   describe "signup" do
     describe "failure" do
-      # nomethoderror for visit…
       it "should not create a new user" do
         lambda do
           visit signup_path
