@@ -1,4 +1,8 @@
+<% if current_user.nil? %>
 <h1>Welcome to Twizilla</h1>
 <p>You can sign in <%= link_to "here", signin_path %>, or: </p>
 
 <%= link_to "Sign Up Now!", signup_path, :class => "round sign-up-button" %>
+<% else %>
+<p>something else will be shown here after the user signed in</p>
+<% end %>
