@@ -10,11 +10,12 @@ gem 'gravatar_image_tag', '0.1.0'
 
 
 group :development do
-  gem 'rspec-rails', '2.0.1'
+  gem 'rspec-rails', '~>2.4'
 end
 
 group :test do
-  gem 'rspec-rails', '2.0.1'
+  gem 'rspec-rails', '~>2.4'
+  gem 'webrat'
   gem 'factory_girl_rails', "1.0"
 end
 # Use unicorn as the web server
