@@ -106,7 +106,7 @@ div.sidebar{
 	background:#ffc;
 	float:right;
 	position:relative;
-	top:-70px;
+	top:-80px;
 }
 
 /*flash*/
@@ -125,7 +125,7 @@ div.sidebar{
 	display: table;
 }
 .field_with_errors label { 
-	olor: #fff;
+	color: #fff;
 }
 #error_explanation {
 	width: 400px;
