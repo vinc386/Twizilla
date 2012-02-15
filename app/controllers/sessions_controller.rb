@@ -11,10 +11,11 @@ class SessionsController < ApplicationController
     if user.nil?
       flash.now[:error] = "Invalid email/password combination."
       render :new
+
     else
-      # create a new session for the user
+      # create a new session for the user and go to the user page
       sign_in user
-      redirect_to user
+      redirect_to user_path(user)
     end
   end
   

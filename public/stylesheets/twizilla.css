@@ -116,7 +116,12 @@ div.sidebar{
 	padding: 10px;
 	margin-bottom: 20px;
 }
-
+.success{
+	width: 97%;
+	background: #2fa;
+	padding: 10px;
+	margin-bottom: 20px;
+}
 /*error message*/
 .field_with_errors {
 	margin-top: 10px; 

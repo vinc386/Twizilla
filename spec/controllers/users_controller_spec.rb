@@ -16,7 +16,7 @@ describe UsersController do
     
     it "should find the right user" do
       get :show, :id => @user
-      assigns(:user).should == @user
+      assigns(:user).should == @user #assign(:sym) takes a symbol and get an instance var from the cotroller
     end
     
     it "should have the right title" do
@@ -104,6 +104,85 @@ describe UsersController do
       it "should sign in the user after s/he registered" do
         post :create, :user => @attr
         controller.should be_signed_in
+      end
+    end
+  end
+  
+  
+  
+  describe "GET 'edit'" do
+
+    before(:each) do
+      test_sign_in@user
+    end
+    
+    it "should be successful" do
+      get :edit, :id => @user
+      response.should be_success
+    end
+    
+    it " should have the right title" do
+      get :edit, :id => @user
+      response.should have_selector('title', :content => "Edit User" ) 
+    end
+    
+    it "should have a link to change the user's gravatar" do
+      get :edit, :id => @user
+      response.should have_selector('a', :href => 'http://gravatar.com/emails',
+                                          :content => "change")
+    end
+  end
+  
+  describe "PUT 'update'" do
+    
+    before(:each) do
+      test_sign_in(@user)
+    end
+    
+    describe "failure" do
+      before(:each) do
+        @attr = {
+          :name => '',
+          :email =>'',
+          :password => '',
+          :password_confirmation => ''
+        }
+      end
+    
+      it "should render the 'edit' page" do
+        put :update, :user => @attr, :id => @user 
+        response.should render_template(:edit)
+      end
+      
+      it "should have the right title" do
+        put :update, :user => @attr, :id => @user 
+        response.should have_selector('title', :content => "Edit User")
+      end
+    end
+    
+    describe "success" do
+      
+      before(:each) do
+        @attr = {
+          :name => 'New Name',
+          :email =>'New_Email@email.com',
+          :password => 'NewPassword',
+          :password_confirmation => 'NewPassword'
+        }
+      end
+      
+      it " update the user's attributes" do
+        put :update, :id => @user, :user => @attr #this @user is the Factory user
+        user = assigns(:user)
+        @user.reload #pull the new user attributes from database
+        @user.name.should eq user.name
+        @user.email.should eq user.email
+        @user.encrypted_password.should eq user.encrypted_password
+      end
+      
+      it "should flash a message" do
+        put :update, :id => @user, :user => @attr
+        flash[:success].should =~ /updated/i
       end
     end
   end

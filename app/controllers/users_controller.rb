@@ -11,7 +11,6 @@ class UsersController < ApplicationController
   end
   
   def create
-    # raise params[:user].inspect
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
@@ -22,4 +21,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find(params[:id])
+    @title = "Edit User"
+  end
+  
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(params[:user])
+      #success
+      redirect_to user_path(@user), :flash => { :success => "Successfully Updated"}
+    else
+      @title = "Edit User"
+      render :edit
+    end
+  end
 end

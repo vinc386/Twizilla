@@ -28,10 +28,10 @@ describe SessionsController do
       
       it "should re-render the sign in page" do
         post :create, :session => @attr
-        response.should render_template('new')
+        response.should render_template(:new)
       end
       
-      it "should have the same title" do
+      it "should have the same title after sign in failure" do
         get :create, :session => @attr
         response.should have_selector('title', :content => 'Sign In')
       end
