@@ -15,6 +15,10 @@ module SessionsHelper
     @current_user ||= user_from_remember_token
   end
   
+  def current_user?(user)
+    user == current_user
+  end
+  
   def signed_in?
     !current_user.nil?
   end
@@ -25,10 +29,26 @@ module SessionsHelper
   end
   
   def deny_access
+    store_location
     flash[:notice] = "Please sign in before accessing this page."
     redirect_to signin_path
   end
   
+  def store_location
+    # session[:hash] expires by then end of browser session
+    # just treat it like a hash
+    session[:requested_page] = request.fullpath 
+  end
+  
+  def redirect_to_or default
+    redirect_to session[:requested_page] || default
+    clear_requested_page
+  end
+  
+  def clear_requested_page
+    session[:requested_page] = nil
+  end
+
   private
   
   def user_from_remember_token

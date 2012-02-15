@@ -188,16 +188,35 @@ describe UsersController do
   end
   
   describe "authenticate of edit/update actions" do
-    it "should reuqire user to sign in before editing" do
-      get :edit, :id => @user
-      response.should redirect_to signin_path
-      flash[:notice].should =~ /sign in/i
-    end
     
-    it "should reuqire user to sign in before updating" do
-      put :update, :id => @user, :user => {} #need this empty :user hash to match the route
-      response.should redirect_to signin_path
-      flash[:notice].should =~ /sign in/i
+    describe "for users that are not signed in" do
+      it "should reuqire user to sign in before editing" do
+        get :edit, :id => @user
+        response.should redirect_to signin_path
+        flash[:notice].should =~ /sign in/i
+      end
+    
+      it "should reuqire user to sign in before updating" do
+        put :update, :id => @user, :user => {} #need this empty user hash to match the route
+        response.should redirect_to signin_path
+        flash[:notice].should =~ /sign in/i
+      end
+    end
+    describe "for users that are signed in" do
+      before(:each) do
+        wrong_user = Factory(:user, :email => "not_the@sameuser.com")
+        test_sign_in(wrong_user)
+      end
+      
+      it "should require matching user for 'edit'" do
+        get :edit, :id => @user
+        response.should redirect_to(user_path(@user))
+      end
+      
+      it "should require matching user for 'update'" do
+        put :update, :id => @user, :user => {}
+        response.should redirect_to(user_path(@user))
+      end
     end
   end
   

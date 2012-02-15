@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
     else
       # create a new session for the user and go to the user page
       sign_in user
-      redirect_to user_path(user)
+      redirect_to_or user
     end
   end
   
