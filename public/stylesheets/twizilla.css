@@ -112,15 +112,21 @@ div.sidebar{
 /*flash*/
 .flash{
 	width: 97%;
-	background: #E66;
 	padding: 10px;
 	margin-bottom: 20px;
 }
+
+.error{
+	background: #E66;
+	border: 3px solid red;
+}
 .success{
-	width: 97%;
 	background: #2fa;
-	padding: 10px;
-	margin-bottom: 20px;
+	border: 3px solid green
+}
+.notice{
+	background:#dd2;
+	border: 3px solid #d93;
 }
 /*error message*/
 .field_with_errors {

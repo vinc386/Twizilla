@@ -113,7 +113,7 @@ describe UsersController do
   describe "GET 'edit'" do
 
     before(:each) do
-      test_sign_in@user
+      test_sign_in @user
     end
     
     it "should be successful" do
@@ -187,6 +187,19 @@ describe UsersController do
     end
   end
   
+  describe "authenticate of edit/update actions" do
+    it "should reuqire user to sign in before editing" do
+      get :edit, :id => @user
+      response.should redirect_to signin_path
+      flash[:notice].should =~ /sign in/i
+    end
+    
+    it "should reuqire user to sign in before updating" do
+      put :update, :id => @user, :user => {} #need this empty :user hash to match the route
+      response.should redirect_to signin_path
+      flash[:notice].should =~ /sign in/i
+    end
+  end
   
   
 end
