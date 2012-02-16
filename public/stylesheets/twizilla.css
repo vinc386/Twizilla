@@ -128,7 +128,8 @@ div.sidebar{
 	background:#dd2;
 	border: 3px solid #d93;
 }
-/*error message*/
+
+/*error message for forms*/
 .field_with_errors {
 	margin-top: 10px; 
 	padding: 2px; 
@@ -163,4 +164,13 @@ div.sidebar{
 #error_explanation ul li { 
 	font-size: 12px; 
 	list-style: square;
+}
+
+/* list of users*/
+ul.users{
+	margin-top:1em;
+}
+ul.users li{
+	list-style: none;
+	margin: .5em;
 }
