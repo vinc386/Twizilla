@@ -172,8 +172,6 @@ describe UsersController do
     end
   end
   
-  
-  
   describe "GET 'edit'" do
 
     before(:each) do

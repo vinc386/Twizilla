@@ -31,12 +31,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    # @user = User.find(params[:id])
     @title = "Edit User"
   end
   
   def update
-    @user = User.find(params[:id])
+    # @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       #success
       redirect_to user_path(@user), :flash => { :success => "Successfully Updated."}
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    User.find(params[:id]).destroy
+    @user.destroy
     redirect_to users_path, :flash => { :success => "Record Deleted."}
   end
   
@@ -64,8 +64,8 @@ class UsersController < ApplicationController
     end
     
     def admin_user
-      user = User.find(params[:id])
+      @user = User.find(params[:id])
       redirect_to root_path, 
-      :flash => { :error => "You do not have the permission to destroy an user record"} unless (current_user.admin? && !current_user?(user))
+      :flash => { :error => "You do not have the permission to destroy an user record"} unless (current_user.admin? && !current_user?(@user))
     end
 end
