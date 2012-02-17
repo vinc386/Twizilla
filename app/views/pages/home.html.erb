@@ -1,8 +1,14 @@
-<% if current_user.nil? %>
-<h1>Welcome to Twizilla</h1>
-<p>You can sign in <%= link_to "here", signin_path %>, or: </p>
-
-<%= link_to "Sign Up Now!", signup_path, :class => "round sign-up-button" %>
+<% if !current_user.nil? %>
+	<div class = "micropost"> What's going on…?</div>
+	<div class = "micropost_form">
+		<%= render 'shared/micropost_form' %>
+	</div>
+	<div class = "sidebar round">
+		<%= render 'shared/user_info' %>
+	</div>
 <% else %>
-<p>something else will be shown here after the user signed in</p>
+	<h1>Welcome to Twizilla</h1>
+	<p>You can sign in <%= link_to "here", signin_path %>, or: </p>
+
+	<%= link_to "Sign Up Now!", signup_path, :class => "round sign-up-button" %>
 <% end %>

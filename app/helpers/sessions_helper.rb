@@ -34,6 +34,10 @@ module SessionsHelper
     redirect_to signin_path
   end
   
+  def authenticate
+    deny_access unless signed_in?
+  end
+  
   def store_location
     # session[:hash] expires by then end of browser session
     # just treat it like a hash

@@ -32,12 +32,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # @user = User.find(params[:id])
+    @user = User.find(params[:id])
     @title = "Edit User"
   end
   
   def update
-    # @user = User.find(params[:id])
+    @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       #success
       redirect_to user_path(@user), :flash => { :success => "Successfully Updated."}
