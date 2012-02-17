@@ -99,14 +99,14 @@ div.profile{
 	width:100%;
 	margin-bottom:0;
 }
-div.sidebar{
-	width:30%;
+.sidebar{
+	width:45%;
 	padding:.8em;
 	vertical-align:top;
 	background:#ffc;
 	float:right;
 	position:relative;
-	top:-80px;
+	top:-90px;
 }
 
 /*flash*/
@@ -173,4 +173,16 @@ ul.users{
 ul.users li{
 	list-style: none;
 	margin: .5em;
+}
+
+/*microposts*/
+
+h1.microposts{
+	margin-bottom: 0.3em;
+}
+table.microposts{
+	margin-top:1em;
+}
+table.microposts tr{
+	height:70px;
 }
