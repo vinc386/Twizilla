@@ -9,13 +9,14 @@ describe MicropostsController do
       response.should redirect_to(signin_path)
     end
     
-    it "should access control to 'create'" do
+    it "should access control to 'destroy'" do
       delete :destroy, :id => 1
       response.should redirect_to(signin_path)
     end
   end
   
   describe "POST 'create'" do
+    
     before(:each) do
       @user = test_sign_in(Factory(:user))
     end
@@ -52,6 +53,44 @@ describe MicropostsController do
       it "should redirect to the root path" do
         post :create, :micropost => @attr
         response.should redirect_to(root_path)
+      end
+      
+      it "should have a flash" do
+        post :create, :micropost => @attr
+        flash[:success].should =~ /created/i
+      end
+    end
+    
+    describe "DELETE 'destroy'" do
+      
+      describe "for unautherized users" do
+        
+        before(:each) do
+          # @user = Factory(:user)
+          wrong_user = Factory(:user, :email => Factory.next(:email))
+          @micropost = Factory(:micropost, :user => @user)
+          test_sign_in(wrong_user)
+        end
+        
+        it "should deny the action" do
+          delete :destroy, :id => @micropost
+          response.should redirect_to(root_path)
+        end
+      end
+      
+      describe "for authorized users" do
+        
+        before(:each) do
+          @micropost = Factory(:micropost, :user => @user)
+        end
+        
+        it "should destroy the micropost" do
+          lambda do
+            delete :destroy, :id => @micropost
+            flash[:success] =~ /deleted/i
+            response.should redirect_to(root_path) 
+          end.should change(Micropost, :count).by(-1)
+        end
       end
     end
     

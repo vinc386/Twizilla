@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
                         
   before_save :encrypt_password
   
+  def feed
+    Micropost.where("user_id = ?", id) # self.microposts
+  end
+  
   def has_password?(submitted_password)
     # Compare encrypted_password with the encrypted version of 
     # submitted_password.

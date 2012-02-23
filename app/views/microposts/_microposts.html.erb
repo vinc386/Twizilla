@@ -3,4 +3,11 @@
 		<span class = "content"><%= mp.content %></span><br />
 		<span class = "timestamp"><%= time_ago_in_words(mp.created_at) %> ago</span>
 	</td>
+	<% if current_user?(mp.user) %>
+		<td>
+			<%= link_to "delete", mp, :method => :delete,
+			 								 :confirm => "You sure?",
+											 :title => mp.content %>
+		</td>	
+	<% end %>
 </tr>
