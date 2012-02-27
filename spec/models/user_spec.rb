@@ -184,6 +184,57 @@ describe User do
     end
   end
 
+  describe "relatioships" do
+    
+    before(:each) do
+      @followed = Factory(:user, :email => Factory.next(:email))
+    end
+    it "should respond to :relationship" do
+      @user.should respond_to(:relationships)
+    end
+    
+    it "should have a :following" do
+      @user.should respond_to(:following)
+    end
+    
+    it "should have a :follow!" do
+      @user.should respond_to(:follow!)
+    end
+    
+    it "should follow another user" do
+      @user.follow!(@followed)
+      @user.should be_following(@followed)
+    end
+    
+    it "should include the followed user in the following array" do
+      @user.follow!(@followed)
+      @user.following.include?(@followed).should be_true
+    end
+
+    
+    it "should have a unfollow method" do
+      @user.should respond_to(:unfollow!)
+    end
+    
+    it "should be able to unfollow a user" do
+      @user.follow!(@followed)
+      @user.unfollow!(@followed)
+      @user.following.should_not include(@followed)
+    end
+    
+    it "should have a :reverse_relationships" do
+      @user.should respond_to(:reverse_relationships)
+    end
+    
+    it "should have a :followers" do
+      @user.should respond_to(:followers)
+    end
+    
+    it "should include the follwer in the followers array" do
+      @user.follow!(@followed)
+      @followed.followers.should include(@user)
+    end
+  end
 
   
 end

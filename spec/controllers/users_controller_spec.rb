@@ -95,7 +95,7 @@ describe UsersController do
     
     it "should have the right URL" do
       get :show, :id => @user
-      response.should have_selector('div>a', :content => user_path(@user),
+      response.should have_selector('a', :content => user_path(@user),
                                             :href => user_path(@user))
     end
     
@@ -116,10 +116,21 @@ describe UsersController do
     it "should have a post count" do
       10.times { Factory(:micropost, :user => @user, :content => "foo") }
       get :show, :id => @user
-      response.should have_selector('div.sidebar', 
+      response.should have_selector('.sidebar', 
                                     :content => @user.microposts.count.to_s) 
-                                    # have_select raise nomethoderror for 10:fixnum, since :content only takes strings, 
+                                    # have_select raise nomethoderror for 10:fixnum, since 
+                                    # :content only takes strings, 
                                     # so to_s is required here
+    end
+    
+    describe "when signed in as another use" do
+      
+      it "should be successful" do
+        test_sign_in(Factory(:user, :email => Factory.next(:email)))
+        get :show, :id => @user
+        response.should be_success
+      end
+      
     end
   end
   

@@ -1,12 +1,17 @@
 <% if !current_user.nil? %>
-	<div class = "micropost"> What's going on…?</div>
-	<div class = "micropost_form">
-		<%= render 'shared/micropost_form' %>
-		<%= render 'shared/feed' %>
-	</div>
-	<div class = "sidebar round">
-		<%= render 'shared/user_info' %>
-	</div>
+	<table class="front" summary="For signed-in users">
+		<tr>
+			<td class="main">
+				<h1 class="micropost">What do you have in mind…?</h1>
+				<%= render 'shared/micropost_form' %>
+				<%= render 'shared/feed' %> 
+			</td>
+			<td class="sidebar round">
+				<%= render 'shared/user_info' %>
+				<%= render 'shared/stats' %>
+			</td> 
+		</tr>
+	</table> 
 <% else %>
 	<h1>Welcome to Twizilla</h1>
 	<p>You can sign in <%= link_to "here", signin_path %>, or: </p>
