@@ -31,10 +31,12 @@ class User < ActiveRecord::Base
                         :confirmation => true,
                         :length       => { :within => 6..60}
                         
+
+                        
   before_save :encrypt_password
-  
+
   def feed
-    Micropost.where("user_id = ?", id) # self.microposts
+    Micropost.from_users_followed_by(self)
   end
   
   def following?(followed)

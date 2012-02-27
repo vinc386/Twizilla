@@ -12,5 +12,15 @@ class Micropost < ActiveRecord::Base
                         :presence => true
   validates :user_id, :presence => true
 
+  scope :from_users_followed_by, lambda {|user| followed_by(user)}
 
+
+  private
+  
+    def self.followed_by(user)
+        followed_ids = %(SELECT followed_id FROM relationships 
+                          WHERE follower_id = :user_id)
+        self.where("user_id IN (#{followed_ids}) OR user_id = :user_id", 
+                      :user_id => user)
+    end
 end
