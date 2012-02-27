@@ -366,6 +366,42 @@ describe UsersController do
     
   end
   
+  describe "follow pages" do
+    
+    describe "not signed in" do
+      
+      it "should protect the 'following'" do
+        get :following, :id => @user
+        response.should redirect_to(signin_path)
+      end
+      
+      it "should protect the 'followers'" do
+        get :followers, :id => @user
+        response.should redirect_to(signin_path)
+      end
+      
+    end
+    
+    describe "when signed in" do
+      before(:each) do
+        test_sign_in(@user)
+        @other_user = Factory(:user, :email => Factory.next(:email))
+        @user.follow!(@other_user)
+      end
+      
+      it "shoudl show user following" do
+        get :following, :id => @user
+        response.should have_selector('a', :href => user_path(@other_user), 
+                                          :content => @other_user.name)
+      end
+      
+      it "should show user followers" do
+        get :followers, :id => @other_user
+        response.should have_selector('a', :href => user_path(@user),
+                                            :content => @user.name)
+      end
+    end
+  end
   
   
   
